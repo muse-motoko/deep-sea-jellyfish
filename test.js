@@ -334,7 +334,6 @@ test('撮影: ファイル名は .png', () => {
   assert.strictEqual(saveFilename(new Date(2026, 0, 2, 3, 4, 5)), 'deep-sea-jellyfish-20260102-030405.png');
 });
 
-
 // --- S8 ---
 const feed = (m, fps, sec) => { let last = null; for (let i = 0; i < Math.round(fps * sec); i++) { const r = m.tick(1 / fps); if (r !== null) last = r; } return last; };
 test('減数: 低 FPS が続くと段階的に減り、最大段階で止まる', () => {
@@ -383,7 +382,7 @@ test('スマホ: viewport・touch-action: none・ブルーム半分・ピクセ�
   const h = readFileSync(new URL('./index.html', import.meta.url), 'utf8');
   const c = readFileSync(new URL('./style.css', import.meta.url), 'utf8');
   assert(/name="viewport"[^>]*width=device-width/.test(h));
-  assert(/touch-action:s*none/.test(c));
+  assert(/touch-action:\s*none/.test(c));
   assert(c.includes('safe-area-inset-bottom'));
   assert.strictEqual(pixelRatioFor('mobile', 3), 1.5);
   assert.strictEqual(BLOOM.resolutionScale, 0.5);
