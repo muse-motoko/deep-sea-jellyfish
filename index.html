@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, user-scalable=no">
+<title>深海クラゲ観察</title>
+<meta name="description" content="光る深海を、ただ眺める。クラゲが静かに、あなたの前を通り過ぎていく。">
+<meta property="og:type" content="website">
+<meta property="og:title" content="深海クラゲ観察">
+<meta property="og:description" content="光る深海を、ただ眺める。クラゲが静かに、あなたの前を通り過ぎていく。">
+<meta property="og:image" content="https://muse-motoko.github.io/deep-sea-jellyfish/ogp.png">
+<meta property="og:url" content="https://muse-motoko.github.io/deep-sea-jellyfish/">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="stylesheet" href="style.css">
+<script type="importmap">
+{ "imports": { "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js",
+  "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/" } }
+</script>
+</head>
+<body>
+<canvas id="scene"></canvas>
+<div class="intro">
+  <h1>深海クラゲ観察</h1>
+  <p>光る深海を、ただ眺める。クラゲが静かに、あなたの前を通り過ぎていく。</p>
+</div>
+<div id="veil" class="veil"></div>
+<div id="beam" class="beam"></div>
+<div id="focus" class="focus"></div>
+<button id="summon" class="summon" type="button">巨大クラゲを呼ぶ</button>
+<button id="photo" class="photo" type="button">📷 撮影モード</button>
+<div id="toolbar" class="toolbar" hidden>
+  <button id="save" type="button">画像を保存</button>
+  <button id="share" type="button">シェア</button>
+  <button id="exit" type="button">戻る</button>
+</div>
+<div id="toast" class="toast" hidden></div>
+<script type="module" src="js/main.js"></script>
+</body>
+</html>
