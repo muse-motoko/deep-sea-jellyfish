@@ -1,0 +1,63 @@
+html, body { margin: 0; height: 100%; background: #020b1f; overflow: hidden; touch-action: none; overscroll-behavior: none; -webkit-tap-highlight-color: transparent; user-select: none; -webkit-user-select: none; }
+#scene { position: fixed; inset: 0; width: 100%; height: 100%; display: block; touch-action: none; cursor: grab; }
+.intro {
+  position: fixed; inset: 0; display: flex; flex-direction: column;
+  align-items: center; justify-content: center; text-align: center;
+  padding: 0 1.5rem; pointer-events: none; color: #bfe6ff;
+  font-family: "Hiragino Sans", "Yu Gothic", "Noto Sans JP", sans-serif;
+  text-shadow: 0 0 18px rgba(80, 180, 255, 0.7);
+  /* 開始から数秒はそのまま見せ、その後ゆっくり消す（クラゲとの重なりを避ける） */
+  animation: intro-fade 3s ease-in 6s forwards;
+}
+@keyframes intro-fade { from { opacity: 1; visibility: visible; } to { opacity: 0; visibility: hidden; } }
+@media (prefers-reduced-motion: reduce) { .intro { animation-duration: 0.01s; animation-delay: 8s; } }
+.intro h1 { margin: 0 0 1rem; font-size: clamp(1.8rem, 6vw, 3.2rem); letter-spacing: 0.15em; font-weight: 500; }
+.intro p { margin: 0; max-width: 36em; text-wrap: balance; word-break: auto-phrase; font-size: clamp(0.9rem, 2.6vw, 1.2rem); line-height: 1.9; opacity: 0.85; }
+
+/* 巨大クラゲ発生の予兆：少し暗くなり、上から光が差す */
+.veil { position: fixed; inset: 0; background: #000510; opacity: 0; pointer-events: none; }
+.beam {
+  position: fixed; inset: 0; opacity: 0; pointer-events: none; mix-blend-mode: screen;
+  background: linear-gradient(105deg, transparent 30%, rgba(120, 190, 255, 0.22) 45%, rgba(170, 220, 255, 0.3) 50%, rgba(120, 190, 255, 0.22) 55%, transparent 70%);
+}
+.summon {
+  position: fixed; right: 1rem; bottom: 1rem; padding: 0.5rem 0.9rem; cursor: pointer;
+  font: 0.85rem "Hiragino Sans", "Yu Gothic", "Noto Sans JP", sans-serif; color: #bfe6ff;
+  background: rgba(10, 30, 70, 0.55); border: 1px solid rgba(150, 210, 255, 0.4); border-radius: 999px;
+}
+.summon:hover { background: rgba(20, 50, 110, 0.7); }
+
+/* 撮影モード */
+.focus { position: fixed; inset: 0; pointer-events: none; opacity: 1; }
+.photo {
+  position: fixed; left: 1rem; bottom: 1rem; padding: 0.3rem 0.65rem; cursor: pointer;
+  font: 0.72rem "Hiragino Sans", "Yu Gothic", "Noto Sans JP", sans-serif; color: #bfe6ff;
+  background: rgba(10, 30, 70, 0.4); border: 1px solid rgba(150, 210, 255, 0.3); border-radius: 999px;
+}
+.toolbar {
+  position: fixed; left: 50%; bottom: 1.2rem; transform: translateX(-50%); display: flex; gap: 0.5rem;
+  transition: opacity 0.4s;
+}
+.toolbar[hidden], .toast[hidden] { display: none; }
+.toolbar button {
+  padding: 0.5rem 0.9rem; cursor: pointer; font: 0.85rem "Hiragino Sans", "Yu Gothic", "Noto Sans JP", sans-serif;
+  color: #bfe6ff; background: rgba(10, 30, 70, 0.55); border: 1px solid rgba(150, 210, 255, 0.4); border-radius: 999px;
+}
+.toolbar.idle { opacity: 0; pointer-events: none; }
+.toast {
+  position: fixed; left: 50%; top: 1.2rem; transform: translateX(-50%); padding: 0.4rem 0.9rem;
+  font: 0.85rem "Hiragino Sans", "Yu Gothic", "Noto Sans JP", sans-serif; color: #bfe6ff;
+  background: rgba(10, 30, 70, 0.7); border-radius: 999px;
+}
+body.photo-mode .intro, body.photo-mode .summon, body.photo-mode .photo { display: none; }
+body.photo-mode #scene { cursor: crosshair; }
+
+/* スマホ：親指で届く下部に、押しやすい大きさ（44px 以上）で置く。ホームバーを避ける */
+@media (pointer: coarse), (max-width: 767px) {
+  .summon, .photo, .toolbar button { min-height: 44px; touch-action: manipulation; }
+  .summon { right: max(0.8rem, env(safe-area-inset-right)); bottom: max(1.2rem, calc(env(safe-area-inset-bottom) + 0.6rem)); font-size: 0.95rem; padding: 0.6rem 1.1rem; }
+  .photo { left: max(0.8rem, env(safe-area-inset-left)); bottom: max(1.2rem, calc(env(safe-area-inset-bottom) + 0.6rem)); font-size: 0.85rem; padding: 0.5rem 0.9rem; }
+  .toolbar { bottom: max(1.2rem, calc(env(safe-area-inset-bottom) + 0.6rem)); gap: 0.6rem; }
+  .toolbar button { font-size: 0.95rem; padding: 0.6rem 1rem; }
+  .toast { top: max(1.2rem, env(safe-area-inset-top)); }
+}
